@@ -1,13 +1,13 @@
 import { apiBase, apiKey } from "../../lib/tmdb";
-export default function handler(req, res) {
-  let searchedMovie = req.params.searchedMovie;
-  let fetchingApi = fetch(
-    `${apiBase}/search/movie?api_key=${apiKey}&language=pt-BR&page=1&include_adult=false&quey=${searchedMovie}`
+export default async function handler(req, res) {
+  let seachText = req.query.searchText;
+  let fetchingApi = await fetch(
+    `${apiBase}/search/movie?api_key=${apiKey}&language=pt-BR&page=1&include_adult=false&query=${seachText}`
   );
 
-  let jsonOfFetchingApi = fetchingApi.json();
+  let jsonOfFetchingApi = await fetchingApi.json();
 
   res.status(200).json({
-    searchedMovie: jsonOfFetchingApi,
+    list: jsonOfFetchingApi.results,
   });
 }

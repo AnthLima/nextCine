@@ -4,6 +4,18 @@ import { useState } from "react";
 
 export default function SearchMovies({ list }) {
   const [searchText, setSearchText] = useState("");
+  const [movieList, setMovieList] = useState([]);
+
+  const handlerSearch = async () => {
+    if (searchText !== "") {
+      console.log("TEXTO", searchText);
+      const fetchingApi = await fetch(
+        `http://localhost:3001/api/searchMovies?searchText=${searchText}`
+      );
+      const jsonOfFetchingApi = await fetchingApi.json();
+      setMovieList(jsonOfFetchingApi.list);
+    }
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -20,6 +32,20 @@ export default function SearchMovies({ list }) {
           onChange={(e) => setSearchText(e.target.value)}
         />
         <span>Movie searched: {searchText} </span>
+        <button onClick={handlerSearch}>search</button>
+        <ul>
+          {movieList.map((item) => (
+            <li>
+              <a href={`/movie/${item.id}`}>
+                <img
+                  src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+                  width="150"
+                />
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
       </main>
     </div>
   );
