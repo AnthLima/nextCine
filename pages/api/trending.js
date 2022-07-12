@@ -6,6 +6,6 @@ export default async (req, res) => {
 
   const jsonOfFetchingApi = await fetchingApi.json();
   res.status(200).json({
-    list: jsonOfFetchingApi,
+    list: jsonOfFetchingApi.results,
   });
 };

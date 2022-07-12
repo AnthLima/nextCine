@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import Link from "next/link";
 
 export default function Home({ list }) {
   return (
@@ -13,14 +14,17 @@ export default function Home({ list }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Featured Movies</h1>
+        <Link href="/searchMovies"> Seach Movies</Link>
         <ul>
           {list.map((item) => (
             <li>
-              <img
-                src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
-                width="150"
-              />
-              {item.title}
+              <a href={`/movie/${item.id}`}>
+                <img
+                  src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+                  width="150"
+                />
+                {item.title}
+              </a>
             </li>
           ))}
         </ul>
@@ -32,13 +36,12 @@ export default function Home({ list }) {
 }
 
 export async function getServerSideProps() {
-  const fetchingApi = await fetch("http://localhost:3000/api/trending");
+  const fetchingApi = await fetch("http://localhost:3001/api/trending");
   const jsonOfFetchingApi = await fetchingApi.json();
   console.log(jsonOfFetchingApi);
-  debugger;
   return {
     props: {
-      list: jsonOfFetchingApi.list.results,
+      list: jsonOfFetchingApi.list,
     },
   };
 }
