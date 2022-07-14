@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useState } from "react";
-
+import Link from "next/link";
 export default function SearchMovies({ list }) {
   const [searchText, setSearchText] = useState("");
   const [movieList, setMovieList] = useState([]);
@@ -25,6 +25,9 @@ export default function SearchMovies({ list }) {
       <link rel="icon" href="/favicon.ico" />
 
       <main className={styles.main}>
+        <Link href="/">Home</Link>
+        <Link href="/searchMovies"> Seach Movies</Link>
+        <Link href="/about">About</Link>
         <h1 className={styles.title}>Search</h1>
         <input
           type="text"
@@ -36,7 +39,7 @@ export default function SearchMovies({ list }) {
         <ul>
           {movieList.map((item) => (
             <li>
-              <a href={`/movie/${item.id}`}>
+              <a href={`http://localhost:3001/movie/${item.id}`}>
                 <img
                   src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                   width="150"

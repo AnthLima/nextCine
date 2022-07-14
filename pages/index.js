@@ -14,11 +14,13 @@ export default function Home({ list }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Featured Movies</h1>
+        <Link href="/">Home</Link>
         <Link href="/searchMovies"> Seach Movies</Link>
+        <Link href="/about">About</Link>
         <ul>
           {list.map((item) => (
             <li>
-              <a href={`/movie/${item.id}`}>
+              <a href={`http://localhost:3001/movie/${item.id}`}>
                 <img
                   src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                   width="150"
@@ -38,7 +40,6 @@ export default function Home({ list }) {
 export async function getServerSideProps() {
   const fetchingApi = await fetch("http://localhost:3001/api/trending");
   const jsonOfFetchingApi = await fetchingApi.json();
-  console.log(jsonOfFetchingApi);
   return {
     props: {
       list: jsonOfFetchingApi.list,
